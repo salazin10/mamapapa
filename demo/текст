@@ -1,0 +1,249 @@
+Cделай используя php/html/css/js, отправь целиком коды под каждый файл страницы
+Дан файл Бд в phpMyAdmin drive.sql
+-- phpMyAdmin SQL Dump
+-- version 5.2.0
+-- https://www.phpmyadmin.net/
+--
+-- Хост: 127.0.0.1:3306
+-- Время создания: Июн 10 2025 г., 17:10
+-- Версия сервера: 8.0.30
+-- Версия PHP: 8.0.22
+
+SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
+START TRANSACTION;
+SET time_zone = "+00:00";
+
+
+/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
+/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
+/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
+/*!40101 SET NAMES utf8mb4 */;
+
+--
+-- База данных: `drive`
+--
+
+-- --------------------------------------------------------
+
+--
+-- Структура таблицы `orders`
+--
+
+CREATE TABLE `orders` (
+  `id` int NOT NULL,
+  `user_id` int DEFAULT NULL,
+  `status_id` int NOT NULL DEFAULT '1',
+  `address` varchar(255) COLLATE utf8mb4_general_ci NOT NULL,
+  `contact_info` varchar(50) COLLATE utf8mb4_general_ci NOT NULL,
+  `marka_auto` varchar(50) COLLATE utf8mb4_general_ci NOT NULL,
+  `model_auto` varchar(50) COLLATE utf8mb4_general_ci NOT NULL,
+  `date_order` date NOT NULL,
+  `time_order` time NOT NULL,
+  `payment_type` varchar(50) COLLATE utf8mb4_general_ci NOT NULL,
+  `card_serial` varchar(50) COLLATE utf8mb4_general_ci NOT NULL,
+  `card_number` varchar(50) COLLATE utf8mb4_general_ci NOT NULL,
+  `date_iss` date NOT NULL,
+  `comment` text COLLATE utf8mb4_general_ci
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Структура таблицы `role`
+--
+
+CREATE TABLE `role` (
+  `id` int NOT NULL,
+  `name` varchar(50) COLLATE utf8mb4_general_ci NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Структура таблицы `status`
+--
+
+CREATE TABLE `status` (
+  `id` int NOT NULL,
+  `name` varchar(50) COLLATE utf8mb4_general_ci NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Дамп данных таблицы `status`
+--
+
+INSERT INTO `status` (`id`, `name`) VALUES
+(1, 'новая'),
+(2, 'одобрено'),
+(3, 'выполнено'),
+(4, 'отклонено');
+
+-- --------------------------------------------------------
+
+--
+-- Структура таблицы `users`
+--
+
+CREATE TABLE `users` (
+  `id` int NOT NULL,
+  `login` varchar(50) COLLATE utf8mb4_general_ci NOT NULL,
+  `password` varchar(50) COLLATE utf8mb4_general_ci NOT NULL,
+  `fio` varchar(255) COLLATE utf8mb4_general_ci NOT NULL,
+  `phone` varchar(20) COLLATE utf8mb4_general_ci NOT NULL,
+  `email` varchar(50) COLLATE utf8mb4_general_ci NOT NULL,
+  `role_id` int NOT NULL DEFAULT '1'
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Индексы сохранённых таблиц
+--
+
+--
+-- Индексы таблицы `orders`
+--
+ALTER TABLE `orders`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `user_id` (`user_id`),
+  ADD KEY `status_id` (`status_id`);
+
+--
+-- Индексы таблицы `role`
+--
+ALTER TABLE `role`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Индексы таблицы `status`
+--
+ALTER TABLE `status`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Индексы таблицы `users`
+--
+ALTER TABLE `users`
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `login` (`login`),
+  ADD KEY `role_id` (`role_id`);
+
+--
+-- AUTO_INCREMENT для сохранённых таблиц
+--
+
+--
+-- AUTO_INCREMENT для таблицы `orders`
+--
+ALTER TABLE `orders`
+  MODIFY `id` int NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT для таблицы `role`
+--
+ALTER TABLE `role`
+  MODIFY `id` int NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT для таблицы `status`
+--
+ALTER TABLE `status`
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+
+--
+-- AUTO_INCREMENT для таблицы `users`
+--
+ALTER TABLE `users`
+  MODIFY `id` int NOT NULL AUTO_INCREMENT;
+
+--
+-- Ограничения внешнего ключа сохраненных таблиц
+--
+
+--
+-- Ограничения внешнего ключа таблицы `orders`
+--
+ALTER TABLE `orders`
+  ADD CONSTRAINT `orders_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `orders_ibfk_2` FOREIGN KEY (`status_id`) REFERENCES `status` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+--
+-- Ограничения внешнего ключа таблицы `users`
+--
+ALTER TABLE `users`
+  ADD CONSTRAINT `users_ibfk_1` FOREIGN KEY (`role_id`) REFERENCES `role` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
+COMMIT;
+
+/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
+/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
+/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
+
+
+Модуль № 1:
+Проектирование и разработка информационных систем
+продолжительность выполнения модуля задания: 1 ч. 30 мин.
+Текст задания: Разработать информационную систему для соответствующей
+предметной области.
+Инструкция к выполнению практической части:
+Для разработки используйте предоставленный сохраненный файл с базой данных
+Разработайте минимально необходимый интерфейс для данной информационно
+системы. Используйте все знания в области языков разметки и программирования, но не
+забывайте что избыточность кода-моветон, а кодовое разнообразие - признак хорошего
+вкуса. Каждый раздел системы должен иметь свою отличительную черту.
+Описание предметной области:
+Портал
+«Едем, но это не точно» представляет собой информационную систему
+для формирования заявок на тест драйв автомобилей перед их покупкой. Перед
+началом использования портала пользователю необходимо пройти процедуру
+регистрации. В ходе регистрации он указывает данные о себе (ФИО, телефон, адрес
+электронной почты, логин и пароль)
+Войдя в систему, заказчик может записаться на тест-драйв, указав свой адрес,
+контактные данные и желаемую марку и модель автомобиля. Также заказчик должен
+указать желаемую дату и время записи на тест-драйв, и предпочтительный тип оплаты
+(наличными или с помощью банковской карты).
+Заявки заказчиков хранятся в системе. В каждой заявке находятся данные
+заказчика, статус заявки (одобрено, выполнено или отклонено).
+После подачи заявки администратор может подтвердить или отклонить заявку с
+указанием причины отклонения.
+Интерфейс разрабатываемой системы должен содержать ссылки для перехода на
+разделы системы
+
+Основной функционал информационной системы
+1 Страница регистрации. На данной странице необходимо предусмотреть добавление
+пользователя в систему. Пользователю необходимо предоставить возможность ввести
+уникальный логин, пароль (минимум 6 символов), ФИО (символы кириллицы и
+пробелы), телефон (в формате +7(XXX)-XXX-XX-XX), адрес электронной почты
+(формат электронной почты). Все поля обязательны для заполнения По кнопке
+«Зарегистрироваться» пользователь должен заноситься в базу.
+2. Страница авторизации. На данной странице необходимо предусмотреть возможность
+ввода логина и пароля для зарегистрированных пользователей.
+3. Страница создания заявки На данной странице авторизованный пользователь имеет
+возможность просмотреть историю своих заявок, а также оставить новую заявку.
+4 Страница формирования заявки Пользователь указывает: свой адрес, контактные
+данные желаемую дату и время получения услуги Необходимо создать поля, в которые
+вносятся сведения о водительском удостоверении (серия, номер, дата выдачи). Помимо
+этого, пользователь выбирает марку и модель автомобиля из предоставленного списка
+(список нужно сформировать самостоятельно, одной марки и не менее двух моделей).
+Все поля обязательны для заполнения.
+5. Панель администратора Доступ в панель администратора осуществляется по логину avto2024
+и паролю рoehali В панели администратора видны все заявки на тест-драйв с отображением всех
+сведений, указанным клиентом.
+Администратор может сменить статус на «одобрено»,
+«выполнено» или «отклонено».
+Модуль № 2: |
+Разработка дизайна веб-приложений
+продолжительность выполнения модуля задания: 1 ч. 00 мнн.
+Текст задания:
+Разработать информационную систему для соответствующей предметной области.
+Инструкция к выполнению практической части:
+Для разработки используйте предоставленный сохраненный файл с базой данных2
+Используйте все знания в области языков разметки и программирования, но не забывайте
+что избыточность кода-моветон, а кодовое разнообразие - признак хорошего вкуса.
+Каждый раздел системы должен иметь свою отличительную черту. Не перегружайте
+вашу разработку обилием цветов,
+оставьте это для живописцев. При разработке
+поставьте себя на место потенцинального клиента и постарайтесь создать идеальную
+информационную систему.
+Вам необходимо также разработать дизайн всех страниц для использования со
+смартфоном с разрешением 390х844 рх Дизайи можно представить в виде файлов
+изображений page (отдельное изображение для каждой страницы), либо в виде html
+файлов (отдельный файл для каждой страницы).
+Интегрировать дизайн в разрабатываемую информационную систему не требуется,
